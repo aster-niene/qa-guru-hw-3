@@ -1,7 +1,10 @@
+package tests;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import pages.RegistrationPage;
 
 import java.io.File;
 
@@ -9,7 +12,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class TextBoxTests {
+public class RegistrationPageObjectTests extends TestBase{
 
     private String firstName = "Ivan";
     private String lastName = "Ulianov";
@@ -17,30 +20,64 @@ public class TextBoxTests {
     private String phone = "1234567890";
     private String address = "some address";
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.browserSize = "1920x1080";
+
+
+    @Test
+    void fillFormTest() {
+        registrationPage
+                .openPage()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
+                .selectGenderMale()
+                .setPhoneNumber(phone)
+                .setBerthDay("16", "September", "1983")
+                .setSubjects("physics")
+                .selectSports()
+                .selectReading()
+                .uploadPicture("src/test/resources/HG.jpg")
+                .setAdress(address)
+                .setState("NCR")
+                .setCity("Delhi")
+                .submit()
+                .verifyResultsModalAppears()
+                .verifyResults("Student Name", firstName + " " + lastName)
+                .verifyResults("Student Email", email)
+                .verifyResults("Gender", "male")
+                .verifyResults("Mobile", phone)
+                .verifyResults("Date of Birth", "16 September,1983")
+                .verifyResults("Subjects", "Physics")
+                .verifyResults("Hobbies", "Sports, Reading")
+                .verifyResults("Picture", "HG.jpg")
+                .verifyResults("Address", address)
+                .verifyResults("State and City", "NCR Delhi")
+                .registrationResultSubmit();
+
+
+
+
+
+
+
+
     }
 
     @Test
-    void fillFormTest(){
-        open("https://demoqa.com/automation-practice-form");
+    void fillFormTest1() {
 
-        executeJavaScript("$('footer').remove()");
-        executeJavaScript("$('#fixedban').remove()");
+        registrationPage.openPage();
+        registrationPage.setFirstName(firstName);
+        registrationPage.setLastName(lastName);
+        registrationPage.setEmail(email);
+        registrationPage.selectGenderMale();
+        registrationPage.setPhoneNumber(phone);
 
-        $("[id=firstName]").setValue(firstName);
-        $("[id=lastName]").setValue(lastName);
-        $("[id=userEmail]").setValue(email);
-        $("[id=gender-radio-1]").doubleClick();
-        $("[id=userNumber]").setValue(phone);
-        $("[id=dateOfBirthInput]").click();
-        $("[class=react-datepicker__month-select]").click();
-        $("[class=react-datepicker__month-select]").selectOption("September");
-        $("[class=react-datepicker__year-select]").click();
-        $("[class=react-datepicker__year-select]").selectOption("1983");
-        $("[class=react-datepicker__year-select]").click();
-        $(".react-datepicker__day--016").click(); //todo "I don't know why but it only works like this"
+
+        //$("[id=gender-radio-1]").doubleClick();
+        //$("[id=userNumber]").setValue(phone);
+
+
+
         $("[id=subjectsInput]").click();
         $("[id=subjectsInput]").setValue("physics");
         $("[id=subjectsInput]").pressEnter();
@@ -48,7 +85,7 @@ public class TextBoxTests {
         $("[id=hobbies-checkbox-1]").parent().click();
         $("[id=hobbies-checkbox-2]").parent().click();
         $("[id=uploadPicture]").uploadFile(new File("src/test/resources/HG.jpg"));
-        $("[id=currentAddress]").setValue(address);
+        registrationPage.setAdress(address);
         $("[id=state]").click();
         $("[id=stateCity-wrapper]").$(byText("NCR")).click();
         $("[id=city]").click();
@@ -56,7 +93,7 @@ public class TextBoxTests {
         $("[id=submit]").click();
 
 
-        $("[class=modal-content]").shouldBe(Condition.visible);
+        registrationPage.verifyResultsModalAppears();
         $("[class=modal-content]").shouldHave(text(firstName));
         $("[class=modal-content]").shouldHave(text(lastName));
         $("[class=modal-content]").shouldHave(text(email));
