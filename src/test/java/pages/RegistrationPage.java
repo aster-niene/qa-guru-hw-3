@@ -29,7 +29,6 @@ public class RegistrationPage {
             selectSportCheckbox =  $("[id=hobbies-checkbox-1]"),
             selectReadingCheckbox =  $("[id=hobbies-checkbox-2]");
 
-
     public RegistrationPage openPage(){
         open("https://demoqa.com/automation-practice-form");
         namePage.shouldHave(text(TITLE_TEXT));
