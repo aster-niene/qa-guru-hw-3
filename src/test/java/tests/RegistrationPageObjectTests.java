@@ -1,22 +1,15 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
+import testdata.RandomData.*;
+
+import static testdata.RandomData.*;
 
 public class RegistrationPageObjectTests extends TestBase {
 
     private String
-            firstName = "Ivan",
-            lastName = "Ulianov",
-            email = "some.email@gmail.com",
-            phone = "1234567890",
-            address = "some address",
-            birthDay = "16",
-            birthMonth = "September",
-            birthYear = "1983",
-            subject = "Physics",
-            file = "src/test/resources/HG.jpg",
-            state = "NCR",
-            city = "Delhi";
+            file = "src/test/resources/HG.jpg";
+
 
     @Test
     void fillFormTest() {
