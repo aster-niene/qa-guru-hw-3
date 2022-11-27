@@ -5,6 +5,7 @@ import pages.components.CalendarComponent;
 import pages.components.RegistationResultsModal;
 
 import java.io.File;
+import java.util.Date;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
